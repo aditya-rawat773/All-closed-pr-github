@@ -7,8 +7,8 @@ object Helper {
 
      fun parseDateTime(date:String):String{
 
-        val parser = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.getDefault()) // the initial pattern
-        val formatter = SimpleDateFormat("dd MMMM yyyy, hh:mm a", Locale.getDefault()) // the desired output pattern
+        val parser = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.getDefault())
+        val formatter = SimpleDateFormat("dd MMMM yyyy, hh:mm a", Locale.getDefault())
 
         val parse = parser.parse(date)
         return  formatter.format(parse!!)

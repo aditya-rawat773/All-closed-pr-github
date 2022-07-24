@@ -3,6 +3,7 @@ package com.example.allclosedprgithub.ui.adapter
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -12,7 +13,7 @@ import com.example.allclosedprgithub.data.model.ClosedPullRequestResponse
 import com.example.allclosedprgithub.databinding.ItemClosedPullRequestBinding
 import com.example.allclosedprgithub.util.Helper
 
-class BaseAdapter : ListAdapter<ClosedPullRequestResponse, BaseAdapter.ClosedPullRequestViewHolder>(
+class BaseAdapter : PagingDataAdapter<ClosedPullRequestResponse, BaseAdapter.ClosedPullRequestViewHolder>(
     ClosedPullRequestComp()
 ) {
 
@@ -23,10 +24,7 @@ class BaseAdapter : ListAdapter<ClosedPullRequestResponse, BaseAdapter.ClosedPul
     }
 
     override fun onBindViewHolder(holder: ClosedPullRequestViewHolder, position: Int) {
-        val currentItem = getItem(position)
-        if (currentItem != null) {
-            holder.bind(currentItem)
-        }
+            holder.bind(getItem(position)!!)
     }
 
     class ClosedPullRequestViewHolder(private val binding: ItemClosedPullRequestBinding) :
