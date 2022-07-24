@@ -32,6 +32,7 @@ class BaseViewModel @Inject constructor(
                 }
                 .collect {
                     _postClosedPullRequest.value = Resource.Success(it)
+                    Log.d("aditya", "getClosedPullRequest:$it ")
                 }
         }
     }
