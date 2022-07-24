@@ -1,6 +1,7 @@
 package com.example.allclosedprgithub.ui
 
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
@@ -18,14 +19,27 @@ import kotlinx.coroutines.launch
 class MainActivity : AppCompatActivity() {
 
     private val viewModel: BaseViewModel by viewModels()
+    private lateinit var baseAdapter: BaseAdapter
+    private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val binding = ActivityMainBinding.inflate(layoutInflater)
+        binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         loadData()
+        setRecyclerView()
+        observeData()
 
-        val baseAdapter = BaseAdapter()
+    }
+
+    private fun loadData() {
+        lifecycleScope.launch {
+            viewModel.getClosedPullRequest()
+        }
+    }
+
+    private fun setRecyclerView() {
+        baseAdapter = BaseAdapter()
         binding.apply {
             rvClosedPullRequest.apply {
                 adapter = baseAdapter
@@ -38,21 +52,20 @@ class MainActivity : AppCompatActivity() {
                 )
             }
         }
+    }
 
+    private fun observeData() {
         lifecycleScope.launch {
             viewModel.postClosedPullRequest.collect {
                 when (it) {
                     is Resource.Success -> {
                         baseAdapter.submitList(it.data)
                     }
+                    is Resource.Error -> {
+                        Toast.makeText(this@MainActivity, "${it.msg}", Toast.LENGTH_SHORT).show()
+                    }
                 }
             }
-        }
-    }
-
-    private fun loadData(){
-        lifecycleScope.launch {
-            viewModel.getClosedPullRequest()
         }
     }
 }
