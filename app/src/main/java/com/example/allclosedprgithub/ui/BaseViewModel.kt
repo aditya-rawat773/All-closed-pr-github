@@ -16,24 +16,22 @@ import javax.inject.Inject
 @HiltViewModel
 class BaseViewModel @Inject constructor(
     private val repository: Repository
-): ViewModel() {
+) : ViewModel() {
     private var job: Job? = null
 
     private val _postClosedPullRequest: MutableStateFlow<Resource> =
         MutableStateFlow(Resource.Empty)
     val postClosedPullRequest: MutableStateFlow<Resource> = _postClosedPullRequest
 
-    fun getClosedPullRequest(){
+    fun getClosedPullRequest() {
         job = viewModelScope.launch {
             _postClosedPullRequest.value = Resource.Loading
             repository.getClosedPullRequest()
                 .catch {
-                    Log.d("aditya", "getClosedPullRequest:$it ")
                     _postClosedPullRequest.value = Resource.Error(it)
                 }
-                .collect{
+                .collect {
                     _postClosedPullRequest.value = Resource.Success(it)
-                    Log.d("aditya", "getClosedPullRequest: ${_postClosedPullRequest.value}")
                 }
         }
     }
