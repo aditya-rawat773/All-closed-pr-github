@@ -23,7 +23,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         val binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        viewModel.getClosedPullRequest()
+        loadData()
 
         val baseAdapter = BaseAdapter()
         binding.apply {
@@ -47,6 +47,12 @@ class MainActivity : AppCompatActivity() {
                     }
                 }
             }
+        }
+    }
+
+    private fun loadData(){
+        lifecycleScope.launch {
+            viewModel.getClosedPullRequest()
         }
     }
 }
