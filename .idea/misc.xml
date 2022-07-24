@@ -3,6 +3,7 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="app/src/main/res/font/poppins.xml" value="0.13697916666666668" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.1" />
         <entry key="app/src/main/res/layout/closed_pull.xml" value="0.10677083333333333" />
         <entry key="app/src/main/res/layout/item_closed_pull_request.xml" value="0.10677083333333333" />
