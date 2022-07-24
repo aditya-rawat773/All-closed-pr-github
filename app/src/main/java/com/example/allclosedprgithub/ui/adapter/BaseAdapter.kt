@@ -10,6 +10,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.GlideContext
 import com.example.allclosedprgithub.data.model.ClosedPullRequestResponse
 import com.example.allclosedprgithub.databinding.ItemClosedPullRequestBinding
+import com.example.allclosedprgithub.util.Helper
 
 class BaseAdapter : ListAdapter<ClosedPullRequestResponse, BaseAdapter.ClosedPullRequestViewHolder>(
     ClosedPullRequestComp()
@@ -34,8 +35,8 @@ class BaseAdapter : ListAdapter<ClosedPullRequestResponse, BaseAdapter.ClosedPul
             binding.apply {
                 title.text = closedPullRequest.title
                 userName.text = closedPullRequest.user.name
-                dateCreated.text = closedPullRequest.created_date
-                dateClosed.text = closedPullRequest.closed_date
+                dateCreated.text = closedPullRequest.created_date?.let { Helper.parseDateTime(it) }
+                dateClosed.text = closedPullRequest.closed_date?.let { Helper.parseDateTime(it) }
                 Glide.with(this.userImage)
                     .load(closedPullRequest.user.avatar_url)
                     .into(userImage)
