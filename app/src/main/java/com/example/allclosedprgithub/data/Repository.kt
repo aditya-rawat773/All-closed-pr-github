@@ -13,7 +13,6 @@ class Repository @Inject constructor(
     fun getClosedPullRequest(): Flow<ArrayList<ClosedPullRequestResponse>> {
         return flow {
             val data = retrofitInstance.getClosedPullRequest()
-            Log.d("aditya", "getClosedPullRequest:${data} ")
             emit(data)
         }
     }

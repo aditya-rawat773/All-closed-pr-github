@@ -6,6 +6,8 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.GlideContext
 import com.example.allclosedprgithub.data.model.ClosedPullRequestResponse
 import com.example.allclosedprgithub.databinding.ItemClosedPullRequestBinding
 
@@ -31,6 +33,12 @@ class BaseAdapter : ListAdapter<ClosedPullRequestResponse, BaseAdapter.ClosedPul
         fun bind(closedPullRequest: ClosedPullRequestResponse) {
             binding.apply {
                 title.text = closedPullRequest.title
+                userName.text = closedPullRequest.user.name
+                dateCreated.text = closedPullRequest.created_date
+                dateClosed.text = closedPullRequest.closed_date
+                Glide.with(this.userImage)
+                    .load(closedPullRequest.user.avatar_url)
+                    .into(userImage)
             }
         }
     }
