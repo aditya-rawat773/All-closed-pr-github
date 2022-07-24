@@ -11,6 +11,7 @@ import com.example.allclosedprgithub.databinding.ActivityMainBinding
 import com.example.allclosedprgithub.ui.adapter.BaseAdapter
 import com.example.allclosedprgithub.util.Resource
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
@@ -19,6 +20,7 @@ import kotlinx.coroutines.launch
 class MainActivity : AppCompatActivity() {
 
     private val viewModel: BaseViewModel by viewModels()
+    private var job: Job? = null
     private lateinit var baseAdapter: BaseAdapter
     private lateinit var binding: ActivityMainBinding
 
@@ -33,7 +35,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun loadData() {
-        lifecycleScope.launch {
+        job?.cancel()
+        job = lifecycleScope.launch {
             viewModel.getClosedPullRequest()
         }
     }
@@ -59,7 +62,7 @@ class MainActivity : AppCompatActivity() {
             viewModel.postClosedPullRequest.collect {
                 when (it) {
                     is Resource.Success -> {
-                        baseAdapter.submitList(it.data)
+                        baseAdapter.submitData(it.data)
                     }
                     is Resource.Error -> {
                         Toast.makeText(this@MainActivity, "${it.msg}", Toast.LENGTH_SHORT).show()

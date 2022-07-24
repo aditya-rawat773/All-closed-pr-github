@@ -1,19 +1,16 @@
 package com.example.allclosedprgithub.data
 
-import android.util.Log
-import com.example.allclosedprgithub.data.model.ClosedPullRequestResponse
-import com.example.allclosedprgithub.data.network.RetrofitInstance
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import com.example.allclosedprgithub.data.network.ApiService
+import com.example.allclosedprgithub.data.pagination.ClosedPullRequestPagingSource
 import javax.inject.Inject
 
 class Repository @Inject constructor(
-    private val retrofitInstance: RetrofitInstance
+    private val apiService:ApiService
 ) {
-    fun getClosedPullRequest(): Flow<ArrayList<ClosedPullRequestResponse>> {
-        return flow {
-            val data = retrofitInstance.getClosedPullRequest()
-            emit(data)
-        }
-    }
+    fun getClosedPullRequest() = Pager(
+        pagingSourceFactory = {ClosedPullRequestPagingSource(apiService)},
+        config = PagingConfig(pageSize = 10)
+    ).flow
 }

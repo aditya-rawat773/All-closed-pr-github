@@ -17,16 +17,11 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun providesRetrofit(): Retrofit {
+    fun providesApiService(): ApiService {
         return Retrofit.Builder()
             .baseUrl(baseUrl)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
-    }
-
-    @Provides
-    @Singleton
-    fun providesApiService(retrofit: Retrofit): ApiService {
-        return retrofit.create(ApiService::class.java)
+            .create(ApiService::class.java)
     }
 }
