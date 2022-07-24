@@ -1,17 +1,18 @@
 package com.example.allclosedprgithub.ui
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.allclosedprgithub.R
 import com.example.allclosedprgithub.databinding.ActivityMainBinding
 import com.example.allclosedprgithub.ui.adapter.BaseAdapter
 import com.example.allclosedprgithub.util.Resource
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
+
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -29,6 +30,12 @@ class MainActivity : AppCompatActivity() {
             rvClosedPullRequest.apply {
                 adapter = baseAdapter
                 layoutManager = LinearLayoutManager(this@MainActivity)
+                this.addItemDecoration(
+                    DividerItemDecoration(
+                        this@MainActivity,
+                        DividerItemDecoration.VERTICAL
+                    )
+                )
             }
         }
 
