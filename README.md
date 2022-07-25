@@ -16,4 +16,4 @@ This is a app using github api. We are fetching all the closed pull request of t
 -  Kotlin Flows
 -  Hilt
 -  Glide
--  Pagining
+-  Paging v3
